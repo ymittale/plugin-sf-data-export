@@ -1,0 +1,42 @@
+[
+  {
+    "attributes": {
+      "type": "Account",
+      "url": "/services/data/v60.0/sobjects/Account/001Pe00000vxV8cIAE"
+    },
+    "Id": "001Pe00000vxV8cIAE",
+    "Name": "ABC"
+  },
+  {
+    "attributes": {
+      "type": "Account",
+      "url": "/services/data/v60.0/sobjects/Account/001fL000009SigsQAC"
+    },
+    "Id": "001fL000009SigsQAC",
+    "Name": "Global Media"
+  },
+  {
+    "attributes": {
+      "type": "Account",
+      "url": "/services/data/v60.0/sobjects/Account/001fL000009SigtQAC"
+    },
+    "Id": "001fL000009SigtQAC",
+    "Name": "Acme"
+  },
+  {
+    "attributes": {
+      "type": "Account",
+      "url": "/services/data/v60.0/sobjects/Account/001fL000009SiguQAC"
+    },
+    "Id": "001fL000009SiguQAC",
+    "Name": "salesforce.com"
+  },
+  {
+    "attributes": {
+      "type": "Account",
+      "url": "/services/data/v60.0/sobjects/Account/001fL000009SigvQAC"
+    },
+    "Id": "001fL000009SigvQAC",
+    "Name": "Sample Account for Entitlements"
+  }
+]

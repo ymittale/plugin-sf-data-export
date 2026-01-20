@@ -1,0 +1,28 @@
+{
+  "summary": "Export data from an org in JSON format.",
+  "bulkSummary": "Export all fields from a specific object.",
+  "objectCompareSummary" : "Compare fields of an object between two orgs.",
+  "callApexClassSummary": "Calling a specific method of the Apex class present in the target org.",
+
+  "examples": [
+    "sf data export --soql \"SELECT Name FROM Account\" --target-org my-org",
+    "sf data export --soql \"SELECT Id, Status FROM Case\" --output results.json"
+  ],
+
+  "bulkExamples": [
+    "sf data bulk --object Account --target-org my-org",
+    "sf data bulk --object Contact --target-org my-org"
+  ],
+
+  "compareExamples":[
+    "sf data compare --object Account --source-org \"DevOrg\" --target-org \"ProdOrg\""
+  ],
+
+  
+  "flags.object.summary": "The API name of the object.",
+  "flags.soql.summary": "The SOQL query to execute.",
+  "flags.output.summary": "The file path to save the results.",
+  "flags.source-org.summary": "The first org (Source)",
+  "flags.target-org.summary": "The second org (Target)",
+  "success": "Successfully exported %s records to %s."
+}
