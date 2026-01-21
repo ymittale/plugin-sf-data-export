@@ -25,5 +25,6 @@ jobs:
         run: npm run build
 
       - name: Run Change Detection
-        # This executes the 'run' method in your GitDifferencePlugin
-        run: ./bin/dev.js data gitDifferencePlugin --base-sha ${{ github.event.before }}
+        run: |
+          chmod +x ./bin/dev.js
+          ./bin/dev.js data gitDifferencePlugin --base-sha ${{ github.event.before }}
