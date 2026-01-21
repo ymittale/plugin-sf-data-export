@@ -1,0 +1,30 @@
+name: Salesforce Data Change Detection
+on:
+  push:
+    branches: [main] # Triggers whenever you push to the main branch
+
+jobs:
+  detect-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        # fetch-depth: 0 is CRITICAL so git can see previous commits for the diff
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Plugin
+        run: npm run build
+
+      - name: Run Change Detection
+        # This executes the 'run' method in your GitDifferencePlugin
+        run: ./bin/dev.js data gitCheck --base-sha ${{ github.event.before }}

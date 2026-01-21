@@ -3,6 +3,7 @@
   "bulkSummary": "Export all fields from a specific object.",
   "objectCompareSummary" : "Compare fields of an object between two orgs.",
   "callApexClassSummary": "Calling a specific method of the Apex class present in the target org.",
+  "gitDiffSummary": "Detects changed files using Git",
 
   "examples": [
     "sf data export --soql \"SELECT Name FROM Account\" --target-org my-org",
@@ -18,7 +19,7 @@
     "sf data compare --object Account --source-org \"DevOrg\" --target-org \"ProdOrg\""
   ],
 
-  
+  "flags.base-sha.summary":"The commit SHA to compare against",
   "flags.object.summary": "The API name of the object.",
   "flags.soql.summary": "The SOQL query to execute.",
   "flags.output.summary": "The file path to save the results.",
