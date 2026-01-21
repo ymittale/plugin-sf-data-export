@@ -26,4 +26,4 @@ jobs:
 
       - name: Run Change Detection
         # This executes the 'run' method in your GitDifferencePlugin
-        run: ./bin/dev.js data gitCheck --base-sha ${{ github.event.before }}
+        run: ./bin/dev.js data gitDifferencePlugin --base-sha ${{ github.event.before }}
