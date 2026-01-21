@@ -33,6 +33,7 @@ export default class ObjectCompare extends SfCommand<void> {
     }),
   };
 
+  // Run Method
   public async run(): Promise<void> {
     const { flags } = await this.parse(ObjectCompare);
     

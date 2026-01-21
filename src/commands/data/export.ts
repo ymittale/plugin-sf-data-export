@@ -46,6 +46,7 @@ export default class Export extends SfCommand<ExportResult> {
     }),
   };
 
+  // Run Method
   public async run(): Promise<ExportResult> {
     const { flags } = await this.parse(Export);
 
