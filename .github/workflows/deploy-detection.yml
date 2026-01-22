@@ -28,6 +28,19 @@ jobs:
         run: npm run build
 
       - name: Run Change Detection
+        id: git_diff
         run: |
           chmod +x ./bin/dev.js
-          ./bin/dev.js data gitDifferencePlugin --base-sha ${{ github.event.before }}
+
+          # Use the PR base SHA (the state of 'main' before the merge)
+          # We use a shell variable to ensure it is handled as a single string
+          PR_BASE_SHA="${{ github.event.pull_request.base.sha }}"
+
+          echo "Merging into base: $PR_BASE_SHA"
+
+          # Execute the command
+          ./bin/dev.js data gitDifferencePlugin --base-sha "$PR_BASE_SHA" > diff_output.txt
+
+          # Capture the list we generated in our TypeScript file
+          FILES=$(grep "CHANGED_FILES_LIST=" diff_output.txt | cut -d'=' -f2)
+          echo "files=$FILES" >> $GITHUB_OUTPUT
