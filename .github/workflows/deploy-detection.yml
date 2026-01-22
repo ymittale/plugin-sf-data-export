@@ -1,10 +1,13 @@
 name: Salesforce Data Change Detection
 on:
-  push:
-    branches: [main] # Triggers whenever you push to the main branch
+  pull_request:
+    branches: [main]
+    types: [closed] # Triggers when a PR is closed
 
 jobs:
   detect-and-deploy:
+    # Only run if the PR was actually merged, not just closed/cancelled
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
