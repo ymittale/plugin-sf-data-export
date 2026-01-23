@@ -5,13 +5,9 @@ import { Config } from '@oclif/core';
 
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 
-const messages = Messages.loadMessages(
-  '@salesforce/plugin-sf-data-export',
-  'export'
-);
+const messages = Messages.loadMessages('@salesforce/plugin-sf-data-export', 'export');
 
-export class GitDifferencePlugin extends SfCommand<void>{
-
+export class GitDifferencePlugin extends SfCommand<void> {
   // 1. Inherit default flags (json, loglevel, etc.) by extending SfCommand
   public static readonly summary = messages.getMessage('gitDiffSummary');
   public static readonly examples = messages.getMessages('examples');
@@ -24,7 +20,6 @@ export class GitDifferencePlugin extends SfCommand<void>{
       default: 'HEAD~1',
     }),
   };
-
 
   // Explicit accessibility modifier (private) for ESLint
   private git: SimpleGit;
@@ -50,7 +45,7 @@ export class GitDifferencePlugin extends SfCommand<void>{
 
       // --name-only returns just the paths of the files
       const diffString = await this.git.diff(['--name-only', baseSha, 'HEAD']);
-      
+
       // Filter out empty strings from the resulting array
       return diffString.split('\n').filter(Boolean);
     } catch (err) {
@@ -61,20 +56,19 @@ export class GitDifferencePlugin extends SfCommand<void>{
 
   public async run(): Promise<void> {
     const { flags } = await this.parse(GitDifferencePlugin);
-    
+
     this.spinner.start('Analyzing git diff');
-    
+
     try {
-      const diffString = await this.git.diff(['--name-only', flags['base-sha'], 'HEAD']);
-      const changedFiles = diffString.split('\n').filter(Boolean);
-      
+      const changedFiles = await this.getChangedFiles(flags['base-sha']);
+
       this.spinner.stop();
 
       if (changedFiles.length === 0) {
         this.log('No files changed.');
       } else {
         this.log('Changed files:');
-        changedFiles.forEach(f => this.log(` - ${f}`));
+        changedFiles.forEach((f) => this.log(` - ${f}`));
       }
     } catch (err) {
       this.spinner.stop('Error');
