@@ -11,6 +11,17 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Plugin
+        run: npm run build
+
       - name: Install Salesforce CLI
         run: npm install -g @salesforce/cli
 
@@ -25,6 +36,5 @@ jobs:
             --alias OrgB
 
       - name: Call Org B Import Service
-
         run: |
           sf data restImport --target-org OrgB --input-file ./data/restExport.json
