@@ -1,9 +1,11 @@
 {
   "summary": "Export data from an org in JSON format.",
   "bulkSummary": "Export all fields from a specific object.",
-  "objectCompareSummary" : "Compare fields of an object between two orgs.",
+  "objectCompareSummary": "Compare fields of an object between two orgs.",
   "callApexClassSummary": "Calling a specific method of the Apex class present in the target org.",
   "gitDiffSummary": "Detects changed files using Git",
+  "restExportSummary": "Exports data from Org A via Apex REST for Git versioning.",
+  "restImportSummary": "Import data to the Org B via Apex REST for Git versioning.",
 
   "examples": [
     "sf data export --soql \"SELECT Name FROM Account\" --target-org my-org",
@@ -15,14 +17,20 @@
     "sf data bulk --object Contact --target-org my-org"
   ],
 
-  "compareExamples":[
-    "sf data compare --object Account --source-org \"DevOrg\" --target-org \"ProdOrg\""
+  "compareExamples": ["sf data compare --object Account --source-org \"DevOrg\" --target-org \"ProdOrg\""],
+
+  "restExportExamples": [
+    "sf data restExport --target-org OrgA",
+    "sf data restExport --target-org OrgA --output ./custom/path.json"
   ],
 
-  "flags.base-sha.summary":"The commit SHA to compare against",
+  "restImportExamples": ["sf data restImport --target-org OrgB --input-file ./data/contact.json"],
+
+  "flags.base-sha.summary": "The commit SHA to compare against",
   "flags.object.summary": "The API name of the object.",
   "flags.soql.summary": "The SOQL query to execute.",
   "flags.output.summary": "The file path to save the results.",
+  "flags.input-file.summary": "The file path to be taken as an input for the import.",
   "flags.source-org.summary": "The first org (Source)",
   "flags.target-org.summary": "The second org (Target)",
   "success": "Successfully exported %s records to %s."
