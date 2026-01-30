@@ -1,0 +1,30 @@
+name: Sync Data to Org B
+on:
+  push:
+    paths:
+      - 'data/restExport.json' # Only runs if this specific file changes
+
+jobs:
+  import-to-org-b:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Salesforce CLI
+        run: npm install -g @salesforce/cli
+
+      - name: Decrypt and Authenticate Org B
+        # Store Org B's JWT Key and Client ID in GitHub Secrets
+        run: |
+          echo "${{ secrets.ORG_B_JWT_KEY }}" > server.key
+          sf org login jwt \
+            --client-id ${{ secrets.ORG_B_CLIENT_ID }} \
+            --jwt-key-file server.key \
+            --username ${{ secrets.ORG_B_USERNAME }} \
+            --alias OrgB
+
+      - name: Call Org B Import Service
+
+        run: |
+          sf data restImport --target-org OrgB --input-file ./data/restExport.json
