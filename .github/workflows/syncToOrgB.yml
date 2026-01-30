@@ -11,17 +11,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 'lts/*'
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Build Plugin
-        run: npm run build
-
       - name: Install Salesforce CLI
         run: npm install -g @salesforce/cli
 
@@ -34,6 +23,20 @@ jobs:
             --jwt-key-file server.key \
             --username ${{ secrets.ORG_B_USERNAME }} \
             --alias OrgB
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Plugin
+        run: npm run build
+
+      - name: Link Plugin
+        run: sf plugins link .
 
       - name: Call Org B Import Service
         run: |
