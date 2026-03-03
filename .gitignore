@@ -33,9 +33,14 @@ package.json.bak.
 # Ignore sensitive server certificates and keys
 server.crt
 server.key
+server.certificates
+sf-data-export.exe
+npm_recovery_codes.txt
+
 # You can also use patterns to ignore all files with certain extensions
 *.crt
 *.key
+*.exe
 
 
 npm-shrinkwrap.json
