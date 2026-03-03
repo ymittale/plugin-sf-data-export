@@ -5,7 +5,7 @@ import { Config } from '@oclif/core';
 
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 
-const messages = Messages.loadMessages('@salesforce/plugin-sf-data-export', 'export');
+const messages = Messages.loadMessages('@mysf/plugin-sf-data-export', 'export');
 
 export class GitDifferencePlugin extends SfCommand<void> {
   // 1. Inherit default flags (json, loglevel, etc.) by extending SfCommand

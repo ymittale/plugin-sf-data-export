@@ -18,62 +18,54 @@ import * as fs from 'node:fs';
 import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
 import { Messages } from '@salesforce/core';
 
-
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 
-const messages = Messages.loadMessages(
-  '@salesforce/plugin-sf-data-export',
-  'export'
-);
+const messages = Messages.loadMessages('@mysf/plugin-sf-data-export', 'export');
 
 type ExportResult = Array<Record<string, unknown>>;
 
-export default class BulkExport extends SfCommand<ExportResult>{
-    public static readonly summary = messages.getMessage('bulkSummary');
-    public static readonly examples = messages.getMessages('bulkExamples');
+export default class BulkExport extends SfCommand<ExportResult> {
+  public static readonly summary = messages.getMessage('bulkSummary');
+  public static readonly examples = messages.getMessages('bulkExamples');
 
-    public static readonly flags = {
-      'target-org': Flags.requiredOrg(),
-      object: Flags.string({
-        char: 's',
-        summary:messages.getMessage('flags.object.summary'),
-        required: true,
-      }),
-      output: Flags.string({
-        char: 't',
-        summary: messages.getMessage('flags.output.summary'),
-        default: 'bulkExport.json',
-      }),
-    };
+  public static readonly flags = {
+    'target-org': Flags.requiredOrg(),
+    object: Flags.string({
+      char: 's',
+      summary: messages.getMessage('flags.object.summary'),
+      required: true,
+    }),
+    output: Flags.string({
+      char: 't',
+      summary: messages.getMessage('flags.output.summary'),
+      default: 'bulkExport.json',
+    }),
+  };
 
-    public async run(): Promise<ExportResult> {
-      const { flags } = await this.parse(BulkExport);
+  public async run(): Promise<ExportResult> {
+    const { flags } = await this.parse(BulkExport);
 
-      const conn = flags['target-org'].getConnection('60.0');
+    const conn = flags['target-org'].getConnection('60.0');
 
-      this.spinner.start(`Fetching fields for ${flags.object}`);
+    this.spinner.start(`Fetching fields for ${flags.object}`);
 
-      // 1. Describe the object to get all field names
-      const describe = await conn.describe(flags.object);
-      const fields = describe.fields.map((f) => f.name).join(', ');
+    // 1. Describe the object to get all field names
+    const describe = await conn.describe(flags.object);
+    const fields = describe.fields.map((f) => f.name).join(', ');
 
-      // 2. Build the "Select All" query
-      const query = `SELECT ${fields} FROM ${flags.object}`;
+    // 2. Build the "Select All" query
+    const query = `SELECT ${fields} FROM ${flags.object}`;
 
-      this.spinner.status = 'Querying data...';
-      const result = await conn.query(query);
+    this.spinner.status = 'Querying data...';
+    const result = await conn.query(query);
 
-      // 3. Save to file
-      const fileName = `${flags.object}_all_fields.json`;
-      fs.writeFileSync(fileName, JSON.stringify(result.records, null, 2));
+    // 3. Save to file
+    const fileName = `${flags.object}_all_fields.json`;
+    fs.writeFileSync(fileName, JSON.stringify(result.records, null, 2));
 
-      this.spinner.stop();
-      this.log(`Successfully exported ${result.records.length} records to ${fileName}`);
+    this.spinner.stop();
+    this.log(`Successfully exported ${result.records.length} records to ${fileName}`);
 
-      return result.records;
-
-    }
+    return result.records;
+  }
 }
-
-
-

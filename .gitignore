@@ -30,6 +30,13 @@ docs
 *.sig
 package.json.bak.
 
+# Ignore sensitive server certificates and keys
+server.crt
+server.key
+# You can also use patterns to ignore all files with certain extensions
+*.crt
+*.key
+
 
 npm-shrinkwrap.json
 oclif.manifest.json

@@ -1,8 +1,22 @@
 {
-  "name": "@salesforce/plugin-sf-data-export",
+  "name": "@mysf/plugin-sf-data-export",
   "description": "Plugin to export data from salesforce",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Salesforce",
+  "main": "lib/index.js",
+  "bin": {
+    "plugin-sf-data-export": "./bin/run.js"
+  },
+  "pkg": {
+    "scripts": "lib/**/*.js",
+    "assets": [
+      "messages/**/*",
+      "oclif.manifest.json"
+    ],
+    "targets": [
+      "node18-win-x64"
+    ]
+  },
   "bugs": "https://github.com/forcedotcom/cli/issues",
   "dependencies": {
     "@oclif/core": "^4",
@@ -17,22 +31,20 @@
     "@salesforce/cli-plugins-testkit": "^5.1.12",
     "@salesforce/dev-scripts": "^11.0.4",
     "@salesforce/plugin-command-reference": "^3.1.79",
-    "@types/node": "^25.1.0",
+    "@types/node": "20.19.33",
     "eslint-plugin-sf-plugin": "^1.20.33",
     "oclif": "^4.22.59",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "typescript": "5.3.3"
   },
   "engines": {
     "node": ">=18.0.0"
   },
   "files": [
-    "/lib",
-    "/messages",
-    "/npm-shrinkwrap.json",
-    "/oclif.lock",
-    "/oclif.manifest.json",
-    "/schemas"
+    "lib/**/*.js",
+    "messages/**",
+    "oclif.manifest.json",
+    "package.json"
   ],
   "homepage": "https://github.com/salesforcecli/plugin-sf-data-export",
   "keywords": [
@@ -64,19 +76,15 @@
   "repository": "salesforcecli/plugin-sf-data-export",
   "scripts": {
     "build": "tsc -p .",
+    "pkg": "npm run build && pkg . --output sf-data-export.exe",
     "clean": "sf-clean",
     "clean-all": "sf-clean all",
     "compile": "tsc -p .",
-    "docs": "sf-docs",
-    "fix-license": "eslint src test --fix --rule \"header/header: [2]\"",
-    "format": "wireit",
-    "link-check": "wireit",
     "lint": "eslint src test --color",
-    "postpack": "sf-clean --ignore-signing-artifacts",
-    "prepack": "sf-prepack",
+    "prepack": "npm run build",
+    "postpack": "",
     "test": "npm run lint",
     "test:nuts": "nyc mocha \"**/*.nut.ts\" --slow 4500 --timeout 600000 --parallel",
-    "test:only": "wireit",
     "version": "oclif readme"
   },
   "publishConfig": {

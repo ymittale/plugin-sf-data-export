@@ -1,6 +1,10 @@
 {
   "extends": "@salesforce/dev-config/tsconfig-strict-esm",
   "compilerOptions": {
+    "skipLibCheck": true,
+    "target": "ESNext",
+    "module": "Node16",
+    "moduleResolution": "Node16",
     "outDir": "lib",
     "rootDir": "src"
   },

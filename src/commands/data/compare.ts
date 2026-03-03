@@ -1,24 +1,18 @@
 import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
 import { Messages } from '@salesforce/core';
 
-
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 
-const messages = Messages.loadMessages(
-  '@salesforce/plugin-sf-data-export',
-  'export'
-);
-
+const messages = Messages.loadMessages('@mysf/plugin-sf-data-export', 'export');
 
 export default class ObjectCompare extends SfCommand<void> {
-  public static readonly summary =  messages.getMessage('objectCompareSummary');
+  public static readonly summary = messages.getMessage('objectCompareSummary');
   public static readonly examples = messages.getMessages('compareExamples');
-
 
   public static readonly flags = {
     object: Flags.string({
       char: 's',
-      summary:messages.getMessage('flags.object.summary'),
+      summary: messages.getMessage('flags.object.summary'),
       required: true,
     }),
     'source-org': Flags.requiredOrg({
@@ -36,7 +30,7 @@ export default class ObjectCompare extends SfCommand<void> {
   // Run Method
   public async run(): Promise<void> {
     const { flags } = await this.parse(ObjectCompare);
-    
+
     // Get connections for both orgs
     const connSource = flags['source-org'].getConnection('60.0');
     const connTarget = flags['target-org'].getConnection('60.0');
@@ -46,15 +40,15 @@ export default class ObjectCompare extends SfCommand<void> {
     // Fetch describes in parallel for speed
     const [sourceDesc, targetDesc] = await Promise.all([
       connSource.describe(flags.object),
-      connTarget.describe(flags.object)
+      connTarget.describe(flags.object),
     ]);
 
-    const sourceFields = new Set(sourceDesc.fields.map(f => f.name));
-    const targetFields = new Set(targetDesc.fields.map(f => f.name));
+    const sourceFields = new Set(sourceDesc.fields.map((f) => f.name));
+    const targetFields = new Set(targetDesc.fields.map((f) => f.name));
 
     // Find differences
-    const missingInTarget = [...sourceFields].filter(f => !targetFields.has(f));
-    const missingInSource = [...targetFields].filter(f => !sourceFields.has(f));
+    const missingInTarget = [...sourceFields].filter((f) => !targetFields.has(f));
+    const missingInSource = [...targetFields].filter((f) => !sourceFields.has(f));
 
     this.spinner.stop();
 

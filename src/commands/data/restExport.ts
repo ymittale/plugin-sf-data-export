@@ -5,7 +5,7 @@ import { Messages, Connection } from '@salesforce/core';
 
 // Load messages for help text
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
-const messages = Messages.loadMessages('@salesforce/plugin-sf-data-export', 'export');
+const messages = Messages.loadMessages('@mysf/plugin-sf-data-export', 'export');
 
 export default class RestExport extends SfCommand<void> {
   // Enables the use of --target-org

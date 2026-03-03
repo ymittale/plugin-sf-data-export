@@ -14,17 +14,13 @@
  * limitations under the License.
  */
 
-
 import * as fs from 'node:fs';
 import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
 import { Messages } from '@salesforce/core';
 
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 
-const messages = Messages.loadMessages(
-  '@salesforce/plugin-sf-data-export',
-  'export'
-);
+const messages = Messages.loadMessages('@mysf/plugin-sf-data-export', 'export');
 
 type ExportResult = Array<Record<string, unknown>>;
 
@@ -54,17 +50,9 @@ export default class Export extends SfCommand<ExportResult> {
 
     const result = await conn.query<Record<string, unknown>>(flags.soql);
 
-    fs.writeFileSync(
-      flags.output,
-      JSON.stringify(result.records, null, 2)
-    );
+    fs.writeFileSync(flags.output, JSON.stringify(result.records, null, 2));
 
-    this.log(
-      messages.getMessage('success', [
-        result.records.length.toString(),
-        flags.output,
-      ])
-    );
+    this.log(messages.getMessage('success', [result.records.length.toString(), flags.output]));
 
     return result.records;
   }

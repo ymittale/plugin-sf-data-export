@@ -1,0 +1,16 @@
+# Ingnore all Source Code
+src/
+tsconfg.json
+*.ts
+*.tsbuildinfo
+
+# Ignore all Development Configs
+.vscode/
+.github/
+.eslintcache
+test/
+
+# Ignore all Local Secrets
+server.key
+server.crt
+.env
